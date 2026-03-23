@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Animated, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -6,6 +6,7 @@ import { Colors } from '../theme/colors';
 import { FontFamily, FontSize, LetterSpacing } from '../theme/typography';
 import { Icon } from '../components/Icon';
 import { useAuth } from '../context/AuthContext';
+import { SearchResultsSkeleton } from '../components/Skeleton';
 
 const SCREEN_W = Dimensions.get('window').width;
 const LOAD_DURATION = 3600; // ms
@@ -59,6 +60,11 @@ interface SearchResultsScreenProps {
 export function SearchResultsScreen({ navigation, route }: SearchResultsScreenProps) {
   const insets = useSafeAreaInsets();
   const [activeFilter, setActiveFilter] = useState('Best Value');
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(t);
+  }, []);
   const { from = 'Phnom Penh', to = 'Siem Reap', date = 'Today' } = route?.params ?? {};
   const { isLoggedIn } = useAuth();
 
@@ -148,7 +154,7 @@ export function SearchResultsScreen({ navigation, route }: SearchResultsScreenPr
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.resultCount}>{RESULTS.length} trips found</Text>
+          <Text style={styles.resultCount}>{isLoading ? 'Searching…' : `${RESULTS.length} trips found`}</Text>
         </LinearGradient>
 
         {/* Sticky filter bar */}
@@ -171,7 +177,7 @@ export function SearchResultsScreen({ navigation, route }: SearchResultsScreenPr
         </View>
 
         {/* Results */}
-        <View style={styles.resultsList}>
+        {isLoading ? <SearchResultsSkeleton /> : <View style={styles.resultsList}>
           {RESULTS.map((r) => (
             <View
               key={r.id}
@@ -268,7 +274,7 @@ export function SearchResultsScreen({ navigation, route }: SearchResultsScreenPr
             <Icon name="lock" size={14} color={Colors.onSurfaceVariant} />
             <Text style={styles.microcopyText}>Secure booking · Instant confirmation</Text>
           </View>
-        </View>
+        </View>}
       </ScrollView>
     </View>
   );

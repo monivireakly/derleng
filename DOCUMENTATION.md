@@ -521,8 +521,8 @@ assets/
 - Payment receipt screen with transaction ID
 
 #### 12.8 E-Ticket Generation
-- PDF/QR ticket generation on booking confirmation
-- Store ticket in device (share as PDF or image)
+- PDF/QR ticket generation on booking confirmation [Done]
+- Store ticket in device (share as PDF or image) 
 - Offline QR code access (for boarding without internet)
 
 #### 12.9 My Trips — Live Data
@@ -568,9 +568,9 @@ assets/
 ## 13. Roadmap — Design & UX Enhancements
 
 ### 13.1 Onboarding Flow
-- 3-screen splash carousel on first launch (search, book, go)
-- Permission requests (notifications, location) with illustrated prompts
-- Skip option to jump straight to HomeScreen
+- 3-screen splash carousel on first launch (search, book, go) [Done]
+- Permission requests (notifications, location) with illustrated prompts [Done]
+- Skip option to jump straight to HomeScreen [Done]
 
 ### 13.2 Real Destination Imagery
 - High-quality hero images per popular route (not just Popular Routes cards)
@@ -578,15 +578,15 @@ assets/
 - Operator logo assets (instead of bus icon placeholder)
 
 ### 13.3 Skeleton Loading States
-- Shimmer placeholder cards in SearchResults while fetching
-- Skeleton rows in MyTrips and Bookings while loading history
-- Prevents layout shift and "flash of empty content"
+- Shimmer placeholder cards in SearchResults while fetching [Done]
+- Skeleton rows in MyTrips and Bookings while loading history [Done]
+- Prevents layout shift and "flash of empty content" [Done]
 
 ### 13.4 Search Bar Enhancement
-- Typeahead / autocomplete for city names
-- Recent city picks (stored locally)
-- "Swap" animation (smooth arc transition between From/To)
-- Map pin input mode (tap on a Cambodia map to set location)
+- Typeahead / autocomplete for city names [Done]
+- Recent city picks (stored locally) [Done]
+- "Swap" animation (smooth arc transition between From/To) [Done]
+- Map pin input mode (tap on a Cambodia map to set location) [Done]
 
 ### 13.5 Empty States
 - Illustrated empty state for My Trips ("No trips yet — book your first adventure")
@@ -645,7 +645,6 @@ assets/
 - Station/stop markers with estimated times
 
 ### 13.15 Checkout UX Polish
-- Apple Pay / Google Pay native integration (single-tap payment)
 - Saved card selection (last 4 digits + card brand icon)
 - Inline card scanner (camera-based card number capture)
 - Animated seat selection (smooth highlight transition)

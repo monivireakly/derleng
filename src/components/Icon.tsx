@@ -42,6 +42,15 @@ const MI_MAP: Record<string, MIName> = {
   check_box: 'check-box',
   arrow_forward: 'arrow-forward',
   arrow_back_ios: 'arrow-back-ios',
+  sync_alt: 'autorenew',
+  touch_app: 'touch-app',
+  expand_less: 'expand-less',
+  swap_vert: 'swap-vert',
+  radio_button_checked: 'radio-button-checked',
+  history: 'history',
+  north_east: 'north-east',
+  map: 'map',
+  north: 'north',
 };
 
 interface IconProps {

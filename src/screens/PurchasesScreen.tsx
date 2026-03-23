@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '../theme/colors';
 import { FontFamily, FontSize, LetterSpacing } from '../theme/typography';
 import { Icon } from '../components/Icon';
+import { PurchasesSkeleton } from '../components/Skeleton';
 
 const PURCHASES = [
   {
@@ -66,6 +67,11 @@ interface PurchasesScreenProps {
 
 export function PurchasesScreen({ navigation }: PurchasesScreenProps) {
   const insets = useSafeAreaInsets();
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setIsLoading(false), 1200);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -76,6 +82,7 @@ export function PurchasesScreen({ navigation }: PurchasesScreenProps) {
         <Text style={styles.pageTitle}>Bookings</Text>
         <Text style={styles.pageSubtitle}>Your complete booking history</Text>
 
+        {isLoading ? <PurchasesSkeleton /> : <>
         {/* Spend summary */}
         <View style={styles.summaryCard}>
           <View style={styles.summaryItem}>
@@ -165,6 +172,7 @@ export function PurchasesScreen({ navigation }: PurchasesScreenProps) {
             </TouchableOpacity>
           ))}
         </View>
+        </>}
       </ScrollView>
     </View>
   );

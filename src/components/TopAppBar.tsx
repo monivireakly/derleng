@@ -9,11 +9,11 @@ interface TopAppBarProps {
   showBack?: boolean;
   onBack?: () => void;
   title?: string;
-  onLogoPress?: () => void;
+  onMenuPress?: () => void;
   rightElement?: React.ReactNode;
 }
 
-export function TopAppBar({ showBack, onBack, title = 'DerLeng', onLogoPress, rightElement }: TopAppBarProps) {
+export function TopAppBar({ showBack, onBack, title = 'DerLeng', onMenuPress, rightElement }: TopAppBarProps) {
   const insets = useSafeAreaInsets();
 
   return (
@@ -24,10 +24,12 @@ export function TopAppBar({ showBack, onBack, title = 'DerLeng', onLogoPress, ri
             <TouchableOpacity onPress={onBack} style={styles.iconBtn} activeOpacity={0.7}>
               <Icon name="arrow_back" size={24} color="#FFFFFF" />
             </TouchableOpacity>
+          ) : onMenuPress ? (
+            <TouchableOpacity onPress={onMenuPress} style={styles.iconBtn} activeOpacity={0.7}>
+              <Icon name="menu" size={24} color="#FFFFFF" />
+            </TouchableOpacity>
           ) : null}
-          <TouchableOpacity onPress={onLogoPress} activeOpacity={onLogoPress ? 0.8 : 1}>
-            <Text style={styles.logoText}>{title}</Text>
-          </TouchableOpacity>
+          <Text style={styles.logoText}>{title}</Text>
         </View>
         {rightElement ? <View style={styles.right}>{rightElement}</View> : null}
       </View>

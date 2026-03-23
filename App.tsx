@@ -30,14 +30,23 @@ import { PurchasesScreen } from './src/screens/PurchasesScreen';
 import { UserProfileScreen } from './src/screens/UserProfileScreen';
 import { ProviderMiniAppScreen } from './src/screens/ProviderMiniAppScreen';
 import { TicketSuccessScreen } from './src/screens/TicketSuccessScreen';
+import { ETicketScreen } from './src/screens/ETicketScreen';
+import { ServiceSearchScreen } from './src/screens/ServiceSearchScreen';
 import { LoginScreen } from './src/screens/LoginScreen';
 import { SignupScreen } from './src/screens/SignupScreen';
+import { OnboardingScreen } from './src/screens/OnboardingScreen';
+
+// Module-level flag: shows onboarding once per app session.
+// Replace with AsyncStorage persistence when ready for production.
+let _onboardingDone = false;
 
 export type RootStackParamList = {
   Main: { tab?: TabName } | undefined;
+  ServiceSearch: { service: 'bus' | 'flight' | 'hotel' };
   SearchResults: { from: string; to: string; date: string };
   ProviderMiniApp: { result: any };
   TicketSuccess: { passengerName?: string; email?: string; seat?: string; result?: any };
+  ETicket: { trip: any };
   Login: undefined;
   Signup: undefined;
 };
@@ -69,7 +78,7 @@ function MainScreen({ navigation, route }: { navigation: any; route: any }) {
     <View style={styles.mainContainer}>
       <TopAppBar
         title={TAB_LABELS[activeTab]}
-        onLogoPress={() => setSidebarOpen(true)}
+        onMenuPress={() => setSidebarOpen(true)}
       />
       {renderScreen()}
       <BottomTabBar activeTab={activeTab} onTabPress={setActiveTab} />
@@ -87,9 +96,11 @@ function AppNavigator() {
   return (
     <AppStack.Navigator screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
       <AppStack.Screen name="Main"            component={MainScreen} />
+      <AppStack.Screen name="ServiceSearch"   component={ServiceSearchScreen} />
       <AppStack.Screen name="SearchResults"   component={SearchResultsScreen} />
       <AppStack.Screen name="ProviderMiniApp" component={ProviderMiniAppScreen} />
       <AppStack.Screen name="TicketSuccess"   component={TicketSuccessScreen}   options={{ animation: 'fade', gestureEnabled: false }} />
+      <AppStack.Screen name="ETicket"         component={ETicketScreen}         options={{ animation: 'slide_from_bottom' }} />
       <AppStack.Screen name="Login"           component={LoginScreen}           options={{ animation: 'slide_from_bottom' }} />
       <AppStack.Screen name="Signup"          component={SignupScreen}          options={{ animation: 'slide_from_bottom' }} />
     </AppStack.Navigator>
@@ -97,6 +108,13 @@ function AppNavigator() {
 }
 
 export default function App() {
+  const [onboardingDone, setOnboardingDone] = useState(_onboardingDone);
+
+  const handleOnboardingDone = () => {
+    _onboardingDone = true;
+    setOnboardingDone(true);
+  };
+
   const [fontsLoaded] = useFonts({
     PlusJakartaSans_400Regular,
     PlusJakartaSans_500Medium,
@@ -113,6 +131,15 @@ export default function App() {
       <View style={styles.loading}>
         <ActivityIndicator size="large" color={Colors.secondary} />
       </View>
+    );
+  }
+
+  if (!onboardingDone) {
+    return (
+      <SafeAreaProvider>
+        <StatusBar style="light" />
+        <OnboardingScreen onDone={handleOnboardingDone} />
+      </SafeAreaProvider>
     );
   }
 
